@@ -4,6 +4,58 @@
     #randomCountryBtn, #scoreBox, #countryInput, #submitBtn, #messageBox {
       font-family: 'Segoe UI', Arial, sans-serif;
     }
+    /* Kontenery boczne */
+    .side-panel {
+      position: absolute;
+      z-index: 1001;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      background: rgba(255,255,255,0.02);
+      border-radius: 12px;
+      padding: 8px 0;
+    }
+    .side-panel.left { top: 16px; left: 16px; }
+    .side-panel.right-top { top: 30px; right: 16px; z-index: 1002; }
+    .side-panel.right-mid { top: 124px; right: 16px; z-index: 1002; }
+    /* Responsywność */
+    @media (max-width: 600px) {
+      .side-panel, .side-panel.left, .side-panel.right-top, .side-panel.right-mid {
+        position: static;
+        width: 100%;
+        left: 0; right: 0; top: 0;
+        box-sizing: border-box;
+        padding: 8px 4vw;
+        margin-bottom: 8px;
+        border-radius: 0;
+        background: rgba(255,255,255,0.95);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      }
+      #globeViz {
+        width: 100vw !important;
+        height: 60vw !important;
+        min-height: 320px;
+        max-height: 60vh;
+      }
+      #countryInput, #submitBtn, #randomCountryBtn, #popChoroplethBtn, #gdpChoroplethBtn {
+        font-size: 1.1em;
+        width: 100%;
+        box-sizing: border-box;
+      }
+      #scoreBox, #messageBox {
+        font-size: 1.1em;
+        width: 100%;
+      }
+      label {
+        font-size: 1em;
+      }
+    }
+    /* Dla bardzo małych ekranów */
+    @media (max-width: 400px) {
+      #globeViz {
+        min-height: 180px;
+      }
+    }
   </style>
 
   <script src="//cdn.jsdelivr.net/npm/globe.gl"></script>
@@ -12,18 +64,18 @@
 
 <body>
 
-  <div style="position:absolute;top:16px;left:16px;z-index:1001;display:flex;flex-direction:column;gap:8px;">
+  <div class="side-panel left">
     <button id="randomCountryBtn" style="padding:10px 18px;font-size:1em;border-radius:8px;border:none;background:#3b82f6;color:#fff;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,0.10);">Show random country</button>
     <div id="scoreBox" style="background:#fff;padding:6px 14px;border-radius:8px;font-size:1em;color:#222;box-shadow:0 2px 8px rgba(0,0,0,0.07);">Score: 0</div>
     <input id="countryInput" type="text" placeholder="Enter country name" style="padding:8px 12px;font-size:1em;border-radius:8px;border:1px solid #bbb;outline:none;" autocomplete="off" />
     <button id="submitBtn" style="padding:8px 12px;font-size:1em;border-radius:8px;border:none;background:#16a34a;color:#fff;cursor:pointer;">Check</button>
     <div id="messageBox" style="min-height:24px;color:#b91c1c;font-weight:bold;"></div>
   </div>
-  <div style="position:absolute;top:30px;right:16px;z-index:1002;display:flex;flex-direction:column;gap:8px;">
+  <div class="side-panel right-top">
     <button id="popChoroplethBtn" style="padding:10px 18px;font-size:1em;border-radius:8px;border:none;background:#3b82f6;color:#fff;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,0.10);">Show Population by Country</button>
     <label style="color:#fff;font-size:0.95em;"><input type="checkbox" id="popAltCheckbox" style="margin-right:6px;">Set altitude by population</label>
   </div>
-  <div style="position:absolute;top:124px;right:16px;z-index:1002;display:flex;flex-direction:column;gap:8px;">
+  <div class="side-panel right-mid">
     <button id="gdpChoroplethBtn" style="padding:10px 18px;font-size:1em;border-radius:8px;border:none;background:#f59e42;color:#fff;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,0.10);">Show GDP by Country</button>
     <label style="color:#fff;font-size:0.95em;"><input type="checkbox" id="gdpAltCheckbox" style="margin-right:6px;">Set altitude by GDP</label>
   </div>
