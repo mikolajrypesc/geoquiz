@@ -1,4 +1,37 @@
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <style>
+    /* ...existing code... */
+    /* Blokuj double-tap zoom na przyciskach i inputach na iOS/Safari */
+    button, input, label {
+      touch-action: manipulation;
+    }
+    /* Blokuj pinch-zoom na całej stronie */
+    html, body {
+      touch-action: pan-x pan-y;
+    }
+  </style>
+  <script>
+    // Blokuj double-tap zoom na przyciskach na iOS/Safari
+    document.addEventListener('DOMContentLoaded', function() {
+      const preventZoom = e => {
+        if (e.touches && e.touches.length > 1) {
+          e.preventDefault();
+        }
+      };
+      document.body.addEventListener('touchstart', preventZoom, { passive: false });
+      document.body.addEventListener('touchmove', preventZoom, { passive: false });
+      // Blokuj double-tap zoom na kliknięciach
+      let lastTouch = 0;
+      document.body.addEventListener('touchend', function(e) {
+        const now = Date.now();
+        if (now - lastTouch <= 350) {
+          e.preventDefault();
+        }
+        lastTouch = now;
+      }, { passive: false });
+    });
+  </script>
   <style>
     body { margin: 0; font-family: 'Segoe UI', Arial, sans-serif; }
     #randomCountryBtn, #scoreBox, #countryInput, #submitBtn, #messageBox {
@@ -311,3 +344,4 @@
     };
   </script>
 </body>
+
